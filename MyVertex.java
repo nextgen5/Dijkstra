@@ -40,6 +40,10 @@ public class MyVertex implements Comparable<MyVertex> {
 
     @Override
     public int compareTo(MyVertex v) {
-        return this.minDistance.compareTo(v.getMinDistance());
+        if (this.minDistance > v.getMinDistance())
+            return 1;
+        if (this.minDistance < v.getMinDistance())
+            return -1;
+        return 0;
     }
 }

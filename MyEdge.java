@@ -10,6 +10,8 @@ public class MyEdge {
         this.weight = random.nextInt(100) + 1;
     }
 
+
+
     public int getWeight() {
         return weight;
     }

@@ -58,7 +58,6 @@ public class MyGraphGenerator {
             return new MyVertex(count++);
         }
     };
-
     Factory<MyEdge> edgeFactory = new Factory<MyEdge>() {
         @Override
         public MyEdge create() {

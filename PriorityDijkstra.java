@@ -8,7 +8,7 @@ public class PriorityDijkstra{
 
     private Hypergraph<MyVertex, MyEdge> g;
     private Transformer<MyEdge, ? extends Number> nev;
-    private List<MyVertex> path;
+    private List<MyEdge> path;
     PriorityQueue<MyVertex> vertexQueue;
 
     public PriorityDijkstra(Graph<MyVertex, MyEdge> g, Transformer<MyEdge, ? extends Number> nev) {
@@ -47,15 +47,18 @@ public class PriorityDijkstra{
      * Place each vertex in a list after the shortest path has been found
      */
 
-    public List<MyVertex> getShortestPathTo(MyVertex source, MyVertex target) {
+    public List<MyEdge> getShortestPathTo(MyVertex source, MyVertex target) {
         path.clear();
         computePaths(source);
         for (MyVertex vertex = target; vertex != null; vertex = vertex.getPrevious()) {
-            path.add(vertex);
+            path.add(g.findEdge(vertex, vertex.getPrevious()));
+
         }
         resetVertices();
         Collections.reverse(path);
         return path;
+
+
 
 }
     /*

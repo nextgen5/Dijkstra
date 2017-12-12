@@ -26,14 +26,14 @@ public class App {
 
         //Uncomment one at a time and use different values to generate different
         //types of graphs
-        sparseGraph = mgg.generateErdosGraph(100, 0.06);
+        sparseGraph = mgg.generateErdosGraph(1000, 0.06);
         //sparseGraph = mgg.generateBarabasiGraph(10, 5, 1000);
         //sparseGraph = mgg.generateEppsteinGraph(1000, 3000, 30);
 
         //Create an arraylist of vertices to run path finding algorithms on
         ArrayList<MyVertex> myVertices = new ArrayList<>(sparseGraph.getVertices());
         System.out.println("Vertices in graph: " + sparseGraph.getVertexCount());
-        System.out.println("Edges in graphL " + sparseGraph.getEdgeCount());
+        System.out.println("Edges in graph: " + sparseGraph.getEdgeCount());
 
 
         //Uncomment block below to create a display of the graph
@@ -51,31 +51,51 @@ public class App {
         */
 
 
+
         DijkstraShortestPath<MyVertex, MyEdge> alg = new DijkstraShortestPath(sparseGraph, vertexIntegerTransformer);
         PriorityDijkstra pd = new PriorityDijkstra(sparseGraph, vertexIntegerTransformer);
         AdjacencyDijkstra ad = new AdjacencyDijkstra(sparseGraph);
         StopWatch timer = new StopWatch();
 
-        //For loop to run 30 times (to get a good mean) that puts the algorithm under the test
-        //by making it check every node to every other node in the graph
-        for (int i = 0; i < 30; i++) {
-
+            MyVertex myVertex1 = myVertices.get(0);
             timer.start();
 
             for (MyVertex myVertex : myVertices) {
-                for (MyVertex myVertex1 : myVertices) {
                     List<MyEdge> l = alg.getPath(myVertex, myVertex1);
-                }
+
+                /*
+                 * The following bit of code can be uncommented to get a line by line comparison of the
+                 * Dijkstra algorithm and the Priority Algorithm having the same path.
+                 */
+
+                /*
+                List<MyEdge> b = pd.getShortestPathTo(myVertex, myVertex1);
+                    System.out.print("Dijkstra Path: ");
+                    for (MyEdge e : l) {
+                        System.out.print(e.toString() + ", ");
+                    }
+                    System.out.println();
+                    System.out.print("Priority Path: ");
+                    for (MyEdge f : b) {
+                        if (f != null) {
+                            System.out.print(f.toString() + ", ");
+                        }
+                    }
+                    System.out.println();
+                    System.out.println("%=====================================%");
+                    */
             }
+
+
             timer.stop();
             System.out.println("Dijkstra Time: " + timer.getTime());
             timer.reset();
             timer.start();
 
             for (MyVertex myVertex : myVertices) {
-                for (MyVertex myVertex1 : myVertices) {
+                //for (MyVertex myVertex1 : myVertices) {
                     ad.findShortestPath(myVertex, myVertex1);
-                }
+                //}
             }
             timer.stop();
             System.out.println("Adjacency Time: " + timer.getTime());
@@ -83,13 +103,15 @@ public class App {
             timer.start();
 
             for (MyVertex myVertex : myVertices) {
-                for (MyVertex myVertex1 : myVertices) {
-                    List<MyVertex> b = pd.getShortestPathTo(myVertex, myVertex1);
-                }
+                //for (MyVertex myVertex1 : myVertices) {
+                    List<MyEdge> b = pd.getShortestPathTo(myVertex, myVertex1);
+
+
+                //}
             }
             timer.stop();
             System.out.println("Priority Time: " + timer.getTime());
             timer.reset();
-        }
+     //   }
     }
 }
